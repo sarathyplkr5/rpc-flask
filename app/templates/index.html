@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <form id="game-form">
+        <label for="choice">Choose:</label>
+        <select id="choice" name="choice">
+            <option value="rock">Rock</option>
+            <option value="paper">Paper</option>
+            <option value="scissors">Scissors</option>
+        </select>
+        <button type="submit">Play</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('game-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const choice = document.getElementById('choice').value;
+            fetch('/play', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ choice: choice })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = `You chose ${data.player_choice}, computer chose ${data.computer_choice}. ${data.result}`;
+            });
+        });
+    </script>
+</body>
+</html>
