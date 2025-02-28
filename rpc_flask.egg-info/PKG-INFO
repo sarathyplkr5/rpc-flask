@@ -1,0 +1,6 @@
+Metadata-Version: 2.2
+Name: rpc-flask
+Version: 0.1.0
+License-File: LICENSE
+Requires-Dist: flask
+Dynamic: requires-dist
