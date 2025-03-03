@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic meta tags for character encoding and responsive design -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
 </head>
 <body>
     <h1>Rock Paper Scissors</h1>
+    <style>
+        body { background-color: lightblue; }
+        h1 { color: green; }
+    </style>
+    <!-- Game form with player choice selection and control buttons -->
     <form id="game-form">
         <label for="choice">Choose:</label>
         <select id="choice" name="choice">
@@ -15,13 +21,19 @@
             <option value="scissors">Scissors</option>
         </select>
         <button type="submit">Play</button>
+        <button type="reset">Reset</button>
+        
     </form>
+    <!-- Container for displaying game results and scores -->
     <div id="result"></div>
+    <div id="score"></div>
 
+    <!-- Script for handling game play submission -->
     <script>
         document.getElementById('game-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+            event.preventDefault();  // Prevent form from submitting normally
             const choice = document.getElementById('choice').value;
+            // Send player's choice to server
             fetch('/play', {
                 method: 'POST',
                 headers: {
@@ -31,9 +43,51 @@
             })
             .then(response => response.json())
             .then(data => {
+                // Display game result
                 document.getElementById('result').innerText = `You chose ${data.player_choice}, computer chose ${data.computer_choice}. ${data.result}`;
+                document.getElementById('score').innerText = `Score - Player: ${data.player_score}, Computer: ${data.computer_score}`;
             });
         });
+    </script>
+
+    <!-- Script for handling game reset -->
+    <script>
+        document.getElementById('game-form').addEventListener('reset', function(event) {
+            event.preventDefault();  // Prevent form from resetting normally
+            // Send reset request to server
+            fetch('/reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({reset: true})
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display reset confirmation
+                document.getElementById('result').innerText = 'Game reset. Scores have been cleared.';
+                document.getElementById('score').innerText = `Score - Player: ${data.player_score}, Computer: ${data.computer_score}`;
+            });
+        });
+    </script>
+
+    <!-- Script for loading initial score when page loads -->
+    <script>
+        window.onload = function() {
+            fetch('/score', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('score').innerText = `Score - Player: ${data.player_score}, Computer: ${data.computer_score}`;
+            })
+            .catch(error => {
+                 console.error('Error fetching initial score:', error);
+                 document.getElementById('score').innerText = 'Error loading score.';});
+        };
     </script>
 </body>
 </html>
