@@ -1,0 +1,26 @@
+{
+    "builds": [
+        {
+            "src": "app/app.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/",
+            "dest": "app/app.py"
+        },
+        {
+            "src": "/play",
+            "dest": "app/app.py"
+        },
+        {
+            "src": "/reset",
+            "dest": "app/app.py"
+        },
+        {
+            "src": "/score",
+            "dest": "app/app.py"
+        }
+    ]
+}
