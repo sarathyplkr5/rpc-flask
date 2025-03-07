@@ -17,26 +17,36 @@ A simple web application built with Flask that allows users to play Rock Paper S
 ## Installation
 
 1. Clone the repository:
-```bash
-git clone https://github.com/sarathyplkr5/rpc-flask
-```
+    ```bash
+    git clone https://github.com/sarathyplkr5/rpc-flask
+    ```
 
-2. Install required dependencies:
-```bash
-pip install -r requirements.txt
-```
+2. Navigate to the project directory:
+    ```bash
+    cd rpc-flask
+    ```
 
-## Usage
+3. Install required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Install the package:
+    ```bash
+    pip install -e .
+    ```
+
+## Usage (local)
 
 1. Start the Flask server:
-```bash
-rpc
-```
+    ```bash
+    rpc
+    ```
 
 2. Open your web browser and navigate to:
-```
-http://127.0.0.1:5000
-```
+    ```
+    http://127.0.0.1:5000
+    ```
 
 3. Select your move (Rock, Paper, or Scissors) and play against the computer!
 
